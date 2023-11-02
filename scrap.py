@@ -7,6 +7,7 @@ import sys
 from random import randrange
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
+import write
 
 driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 driver.maximize_window()
@@ -29,7 +30,7 @@ while True:
 			driver.get('https://www.amazon.in')
 			time.sleep(5)
 			driver.get(url)
-			time.sleep(24)
+			time.sleep(35)
 
 			title = driver.find_element(By.ID,'productTitle').text
 			# image_urls = driver.find_elements(By.XPATH,'//div[@id="altImages"]/ul/li//img')
@@ -44,6 +45,7 @@ while True:
 			print(sold_by)
 
 			item = {
+				"url": url,
 				"title": title,
 				# "imageUrls": [ image_url.get_attribute('src') for image_url in image_urls ],
 				"actualPrice": actual_price,
@@ -60,6 +62,7 @@ while True:
 			# product_json = product_response.json()
 			# print(json.dumps(product_json, indent=1))
 			print(item)
+			write.writeGS(item)
 			# target["status"] = "success"
 		except:
 			# time.sleep(60 * 100)
